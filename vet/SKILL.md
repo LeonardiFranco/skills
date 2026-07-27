@@ -6,7 +6,7 @@ license: MIT
 
 # Vet
 
-Review one spec artifact — a handoff plan under `.scratch/` or a spec (`SPEC-*.md` / legacy `PRD-*.md`) at repo root — for whether the change it describes *makes sense*, and leave the artifact improved. The autonomous counterpart to `grill-plan`: the codebase and the document corpus answer the questions instead of the user, and only what they can't answer reaches the user at the end.
+Review one spec artifact — a handoff plan under `.scratch/`, or a spec at its canonical path `.scratch/<requirement-slug>/SPEC.md` (legacy `PRD.md`; legacy root forms `SPEC-*.md` / `PRD-*.md` also count) — for whether the change it describes *makes sense*, and leave the artifact improved. The autonomous counterpart to `grill-plan`: the codebase and the document corpus answer the questions instead of the user, and only what they can't answer reaches the user at the end.
 
 **First, read [the advisor contract](../improve/references/advisor-contract.md).** You never edit source code; the only files you write are the artifact under review and, when a plan's status changes, its plans `README.md`.
 
@@ -20,7 +20,7 @@ Review one spec artifact — a handoff plan under `.scratch/` or a spec (`SPEC-*
 
 Zero or multiple matches → STOP, list candidates, ask which.
 
-Artifact type comes from location: under a `plans/` tree → **plan rubric**; spec at repo root → **spec rubric**. Read the artifact in full, then its neighbours — sibling plans in the same tree, or every sibling spec this one cross-references.
+Artifact type comes from location: under a `plans/` tree → **plan rubric**; a requirement's `SPEC.md` or a legacy root spec → **spec rubric**. Read the artifact in full, then its neighbours — sibling plans in the same tree, or every sibling spec this one cross-references.
 
 ## Verify — cheap subagents, your verdict
 

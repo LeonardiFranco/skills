@@ -20,7 +20,9 @@ Personal drafting area (gitignored). Consumer skills read this file first as the
 │       └── <NNN>-<slug>.md
 ├── _write-pr/                 ← PR description drafts (write-pr skill)
 ├── _handoff/                  ← session handoff docs (handoff skill)
-├── _improve-architecture/      ← HTML architecture reviews
+├── _improve-architecture/      ← markdown architecture reviews
+├── _pr-review/                 ← PR review findings (review-pr skill)
+├── _roast/                     ← roast reports
 └── _duel/                      ← duel candidates + verdicts, one slug folder per duel
 ```
 
@@ -31,7 +33,9 @@ Personal drafting area (gitignored). Consumer skills read this file first as the
 - **Backlog plan** → `.scratch/_backlog/plans/<NNN>-<slug>.md`
 - **PR description** → `.scratch/_write-pr/<branch-slug>-PR.md`
 - **Handoff doc** → `.scratch/_handoff/<timestamp>-handoff.md`
-- **Architecture review** → `.scratch/_improve-architecture/architecture-review-<timestamp>.html`
+- **Architecture review** → `.scratch/_improve-architecture/architecture-review-<timestamp>.md`
+- **PR review findings** → `.scratch/_pr-review/<id>.md`
+- **Roast report** → `.scratch/_roast/ROAST.md`
 - **Duel** → `.scratch/_duel/<slug>/` (candidate-a, candidate-b, merged; user cleans up)
 
 ## Requirements

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user — just synthesize what you already know.
 
-Before acting, read issue tracker and triage label config from `docs/agents/` — prefer `docs/agents/local/<name>.md` when present. If missing or incomplete, ask the user to run `/setup-fleonardi-skills`.
+Before acting, read the config this skill needs from `docs/agents/` — prefer `docs/agents/local/<name>.md` over `docs/agents/<name>.md` when both exist. If missing or incomplete, ask the user to run `/setup-fleonardi-skills`. Here that means the issue tracker and triage label configs.
 
 ## Process
 

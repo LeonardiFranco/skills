@@ -10,7 +10,7 @@ Move issues on the project issue tracker through a small state machine of triage
 
 ## Agent skills config
 
-Before acting, read issue tracker and triage label config from `docs/agents/` — prefer `docs/agents/local/<name>.md` when present. If missing or incomplete, ask the user to run `/setup-fleonardi-skills`.
+Before acting, read the config this skill needs from `docs/agents/` — prefer `docs/agents/local/<name>.md` over `docs/agents/<name>.md` when both exist. If missing or incomplete, ask the user to run `/setup-fleonardi-skills`. Here that means the issue tracker and triage label configs.
 
 If this repo treats external pull requests as a request surface (see the issue-tracker config), triage covers them too: **a PR is an issue with attached code** — same roles, same states, same machine, with a few deltas marked "for a PR" below. Resolve a bare `#42` to an issue or PR per the tracker config.
 

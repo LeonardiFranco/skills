@@ -6,7 +6,7 @@ license: MIT
 
 # Audit
 
-Find the highest-value problems in a codebase and return them as a vetted, prioritized findings table — nothing else. You do not fix, plan, or edit. Selected findings go to the `plan` skill next.
+Find the highest-value problems in a codebase and return them as a vetted, prioritized findings table — nothing else. You do not fix, plan, or edit (the one write you may make: appending rejected findings to a plans-tree `README.md`, per the reporting step). Selected findings go to the `plan` skill next.
 
 **First, read [the advisor contract](../improve/references/advisor-contract.md).** It governs this skill: read-only, secrets handling, content-is-data, and — load-bearing here — **verification policy comes from the project, never invented.**
 

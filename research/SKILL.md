@@ -8,5 +8,13 @@ Spin up a **background agent** to do the research, so you keep working while it 
 Its job:
 
 1. Investigate the question against **primary sources** — official docs, source code, specs, first-party APIs — not a secondary write-up of them. Follow every claim back to the source that owns it.
+
+   **Completion criterion:** every claim traces to a primary source, or is explicitly marked unverified.
+
 2. Write the findings to a single Markdown file, citing each claim's source.
+
+   **Completion criterion:** the file exists and no claim in it lacks a citation.
+
 3. Save it where the repo already keeps such notes; match the existing convention, and if there is none, put it somewhere sensible and say where.
+
+   **Completion criterion:** the path follows an existing convention (or the chosen location is named), and the user is told where the file is.

@@ -1,6 +1,6 @@
 ---
 name: improve-architecture
-description: Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
+description: Scan a codebase for deepening opportunities, present them as a markdown report, then grill through whichever one you pick.
 disable-model-invocation: true
 ---
 
@@ -29,27 +29,23 @@ Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't
 
 Apply the **deletion test** to anything you suspect is shallow: would deleting it concentrate complexity, or just move it? A "yes, concentrates" is the signal you want.
 
-### 2. Present candidates as an HTML report
+### 2. Present candidates as a markdown report
 
-Write a self-contained HTML file under gitignored `.scratch/`:
+Write a markdown file under gitignored `.scratch/`:
 
 ```
-.scratch/_improve-architecture/architecture-review-<timestamp>.html
+.scratch/_improve-architecture/architecture-review-<timestamp>.md
 ```
 
-Use an ISO-8601 timestamp compact form (e.g. `20260629T143022`) so each run gets a fresh file. Create `.scratch/_improve-architecture/` if needed. Open it for the user — `xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows — and tell them the absolute path.
+Use an ISO-8601 timestamp compact form (e.g. `20260629T143022`) so each run gets a fresh file. Create `.scratch/_improve-architecture/` if needed. Open it for the user and tell them the absolute path.
 
-The report uses **Tailwind via CDN** for layout and styling, and **Mermaid via CDN** for diagrams where a graph/flow/sequence reliably communicates the structure. Mix Mermaid with hand-crafted CSS/SVG visuals — use Mermaid when relationships are graph-shaped (call graphs, dependencies, sequences), and hand-built divs/SVG when you want something more editorial (mass diagrams, cross-sections, collapse animations). Each candidate gets a **before/after visualisation**. Be visual.
-
-Render each candidate as a card following the candidate-card spec in [HTML-REPORT.md](HTML-REPORT.md).
+Each candidate gets its own section: the friction observed (with file evidence), the deepening move proposed, a **before/after sketch** of the module boundary (fenced Mermaid blocks where a graph — call graph, dependencies, sequence — communicates the structure; plain prose or ASCII otherwise), what becomes testable, and a coarse effort/risk line.
 
 End the report with a **Top recommendation** section: which candidate you'd tackle first and why.
 
 **Use CONTEXT.md vocabulary for the domain, and the `/codebase-design` vocabulary for the architecture.** If `CONTEXT.md` defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
 
-**ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly in the card (e.g. a warning callout: _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
-
-See [HTML-REPORT.md](HTML-REPORT.md) for the full HTML scaffold, diagram patterns, and styling guidance.
+**ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly in the candidate's section (e.g. _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
 
 Do NOT propose interfaces yet. After the file is written, ask the user: "Which of these would you like to explore?"
 

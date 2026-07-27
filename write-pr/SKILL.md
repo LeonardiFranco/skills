@@ -2,7 +2,8 @@
 name: write-pr
 description: >-
   Write a pull request description. Use when the user asks for a PR description;
-  after execute APPROVE; or when the current branch is ready to merge.
+  when the current branch is ready to merge; or when the publish-pr skill needs
+  a description for a branch it is publishing.
 ---
 
 # Write PR
@@ -13,7 +14,7 @@ Two entry paths; same output:
 
 | Path              | Scope source                                                             |
 | ----------------- | ------------------------------------------------------------------------ |
-| **After execute** | Plan file (done criteria, test plan, risk, in-scope paths) + branch diff |
+| **Plan-driven** (via `publish-pr`'s execute entry) | Plan file (done criteria, test plan, risk, in-scope paths) + branch diff |
 | **Standalone**    | Branch diff + commit log on the current branch                           |
 
 Steering discovery and fallback template: [references/steering-discovery.md](references/steering-discovery.md). Default skeleton when no repo template exists: [references/default-pr-template.md](references/default-pr-template.md).
@@ -38,7 +39,7 @@ git log <base>..HEAD --oneline
 git diff <base>..HEAD --stat
 ```
 
-**After execute:** also read the plan file from context (done criteria, manual test plan, risk, "Why this matters").
+**Plan-driven:** also read the plan file from context (done criteria, manual test plan, risk, "Why this matters").
 
 **Completion criterion:** you can state the commit range, major areas touched (from paths, not a raw file dump), and whether the diff exceeds plan scope (note in follow-up section if so).
 
@@ -56,10 +57,11 @@ git diff <base>..HEAD --stat
 3. **Test / verification section:** numbered steps a stranger can follow. Source from the plan's manual test plan when present; otherwise derive from the diff and steering's verification policy. No vague "verify it works" steps; no false claims about automated tests the repo lacks.
 4. **Risk / impact:** match template boxes or prose; align with plan risk when a plan drove the work.
 5. **Follow-up / notes:** deferred work, known limits, out-of-scope diff.
+6. **Prose pass:** apply [`ste-writing`](../ste-writing/SKILL.md) to filled prose only — **STE-flavored** for summary, risk, and notes; **strict** for test/verification steps. Leave checklist labels, template headings, identifiers, and command syntax alone.
 
 Do not reproduce secrets. Reference credential *types* and paths only.
 
-**Completion criterion:** a reviewer could validate from the test section alone.
+**Completion criterion:** a reviewer could validate from the test section alone; filled prose passes the ste-writing self-lint for its mode.
 
 ## Step 5 — Persist
 

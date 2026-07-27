@@ -5,11 +5,11 @@ description: Roast a codebase functionality-wise — a candid, evidence-backed a
 
 # Roast
 
-A roast is the `audit` skill with three deltas: a **functional/UX lens** instead of the nine categories, a **candid tone**, and a **written report artifact** instead of only a findings table. Everything else — recon, parallel fan-out, the finding format, the vet-before-present pass — is audit's; do not reimplement any of it.
-
 Invoke the [`audit`](../audit/SKILL.md) skill with this focus argument (compose the user's `quick`/`deep` keywords and any extra scoping into it verbatim):
 
 > Roast the application functionality-wise — a candid, critical survey of user-facing functionality gaps, inconsistencies, half-built features, and UX/workflow absurdities. Output as a markdown findings file.
+
+Everything else — recon, parallel fan-out, the finding format, the vet-before-present pass — is audit's; do not reimplement any of it.
 
 ## Lens (what the fan-out hunts)
 
@@ -24,4 +24,4 @@ Shape the parallel subagents around the product's actual user surfaces discovere
 
 Tone: candid and punchy, but **no roast without receipts** — every jab carries `file:line` evidence, and the vet pass still applies before anything is published. Impact/effort/risk/confidence per finding as audit defines.
 
-Write the report to `.scratch/roast/ROAST.md` (or a path the user names). Suggested shape: a one-paragraph roast up top, a leverage-ordered "hall of shame" table, per-surface sections, a parity table when there are multiple clients, then — separated, per audit's rules — direction options, security side-notes, rejections, and an explicit not-audited list. Do not commit the file; it's a working artifact.
+Write the report to `.scratch/_roast/ROAST.md` (or a path the user names). Suggested shape: a one-paragraph roast up top, a leverage-ordered "hall of shame" table, per-surface sections, a parity table when there are multiple clients, then — separated, per audit's rules — direction options, security side-notes, rejections, and an explicit not-audited list. Do not commit the file; it's a working artifact.

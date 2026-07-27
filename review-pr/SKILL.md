@@ -1,10 +1,9 @@
 ---
 name: review-pr
 description: >-
-  Review a pull request with fresh eyes and post the findings as PR comments. Use when
-  asked to review a PR by id or URL — typically a draft PR published by /execute's
-  publish-on-approve tail, before the human spends manual testing time. Host mechanics
-  come from the project's local agent config. Never votes; never edits code.
+  Review a pull request with fresh eyes and post the findings as PR comments —
+  typically a draft PR published by /publish-pr, before the human spends manual
+  testing time. Never votes; never edits code.
 argument-hint: "<pr-id> [<effort: low|high>]"
 disable-model-invocation: true
 ---
@@ -46,6 +45,9 @@ The description plus any convention-mandated comments are the stated intent — 
 review against. **Never check the PR branch out in the user's working tree** — always a detached
 worktree; remove it when done (`git worktree remove`).
 
+**Completion criterion:** metadata and existing threads read, and the diff base established in a
+detached worktree — merge ref, or the three-dot fallback noted for the summary.
+
 ## Step 2 — Review
 
 Diff = merge state vs target, computed inside the worktree with plain git. Read project steering
@@ -63,6 +65,9 @@ Judge every hunk on:
 Effort scales like a tech-lead review: default skim-every-hunk; `high` → read every hunk closely
 and chase call sites in the worktree.
 
+**Completion criterion:** steering read first, and every hunk judged on all four axes at the
+requested effort.
+
 ## Step 3 — Report and post
 
 1. Write the findings file first: `.scratch/_pr-review/<id>.md` — verdict line
@@ -73,6 +78,9 @@ and chase call sites in the worktree.
    finding count + pointer lines), plus optionally one thread per significant finding,
    file/line-anchored if the host supports it.
 3. Leave threads unresolved/active — resolving them is the human reviewer's act.
+
+**Completion criterion:** findings file on disk, every posted comment carries the
+`[agent review]` prefix, and all threads left active.
 
 ## Completion criterion
 

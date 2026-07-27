@@ -1,6 +1,6 @@
 ---
 name: yagni
-description: Judge one proposal, design, or `.scratch` plan against YAGNI — classify every moving part as forced or speculative and return the simplest version the stated requirement allows. Use when asked to yagni or simplify a proposal, when a design smells over-engineered, or when another skill (grill-yagni) needs the lens. Judges proposals, not already-written code.
+description: Judge one proposal, design, or `.scratch` plan against YAGNI — classify every moving part as forced or speculative and return the simplest version the stated requirement allows. Use when asked to yagni or simplify a proposal, when a design smells over-engineered, or when another skill needs the lens. Judges proposals, not already-written code.
 ---
 
 # YAGNI

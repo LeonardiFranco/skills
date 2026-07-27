@@ -21,7 +21,7 @@ Everything a duel produces lives in **`.scratch/_duel/<slug>/`** — candidates,
 
 ## 2. Fan out candidate A (different model)
 
-Dispatch one general-purpose subagent with `model` set to something other than this session's — the user's choice wins; default `opus` (or `sonnet` when the session is already opus). Its prompt carries: the full brief, the **absolute path** of the authoring skill's SKILL.md, the scoping from step 1, and the output path `.scratch/_duel/<slug>/candidate-a.md`. It gets the brief and the repo — never this conversation. Fresh eyes are the point.
+Dispatch one general-purpose subagent with `model` set to something other than this session's — the user's choice wins; default `opus` (or `sonnet` when the session is already opus). Its prompt carries: the full brief, the **absolute path** of the authoring skill's SKILL.md, the scoping from step 1, the output path `.scratch/_duel/<slug>/candidate-a.md`, and rules 5 and 6 of [the advisor contract](../improve/references/advisor-contract.md) **pasted verbatim from that file** (subagents don't inherit them; see the subagent-briefing template §6). It gets the brief and the repo — never this conversation. Fresh eyes are the point.
 
 ## 3. Author candidate B (this session)
 
@@ -31,7 +31,7 @@ While A runs, write your own candidate to `.scratch/_duel/<slug>/candidate-b.md`
 
 Wait for A's dispatch to complete and confirm `candidate-a.md` is real (present and plausibly complete). If it never materializes or is unusable, there is no duel: say so plainly and continue with your candidate as an ordinary output of the authoring skill.
 
-You wrote one of the candidates; that is exactly why you don't judge. Dispatch a fresh subagent whose prompt carries: the brief, the **absolute paths** of both the `judge` skill's SKILL.md and the authoring skill's SKILL.md (the bar the candidates were written to), both candidate paths labeled only **A** and **B** — never which author produced which — and `.scratch/_duel/<slug>/merged.md` as the path for any merged artifact a split decision produces.
+You wrote one of the candidates; that is exactly why you don't judge. Dispatch a fresh subagent whose prompt carries: the brief, the **absolute paths** of both the `judge` skill's SKILL.md and the authoring skill's SKILL.md (the bar the candidates were written to), both candidate paths labeled only **A** and **B** — never which author produced which — `.scratch/_duel/<slug>/merged.md` as the path for any merged artifact a split decision produces, and advisor-contract rules 5 and 6 pasted verbatim as in step 2.
 
 ## 5. Deliver the verdict
 

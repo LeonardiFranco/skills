@@ -73,7 +73,7 @@ Each ticket file:
 Blocked by: <slug>, <slug>
 Status: open | in-progress | resolved
 Claimed: <who> <YYYY-MM-DD>   ← only while in-progress
-Type: Research | Prototype | Grilling | Task
+Type: Research | Prototype | Grilling
 
 ## Question
 

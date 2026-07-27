@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Break a spec, plan, or conversation into a set of **tickets** — tracer-bullet vertical slices, each declaring the tickets that **block** it.
 
-Before acting, read issue tracker and triage label config from `docs/agents/` — prefer `docs/agents/local/<name>.md` when present. If missing or incomplete, ask the user to run `/setup-fleonardi-skills`.
+Before acting, read the config this skill needs from `docs/agents/` — prefer `docs/agents/local/<name>.md` over `docs/agents/<name>.md` when both exist. If missing or incomplete, ask the user to run `/setup-fleonardi-skills`. Here that means the issue tracker and triage label configs.
 
 ## Process
 
@@ -37,21 +37,14 @@ Present the proposed breakdown as a numbered list. For each ticket, show:
 - **What it delivers**: the end-to-end behaviour this ticket makes work
 - **Stories covered**: which numbered spec stories this ticket addresses (when the source has them)
 
-Ask the user:
-
-- Does the granularity feel right? (too coarse / too fine)
-- Are the blocking edges correct — does each ticket only depend on tickets that genuinely gate it?
-- Should any tickets be merged or split further?
-- Is every spec story covered by at least one ticket — and is anything uncovered named as deliberately not ticketed?
-
-Iterate until the user approves the breakdown.
+Ask one question: **"Approve this breakdown?"** Dig into granularity, blocking edges, merges/splits, or story coverage only when the user pushes back on the proposal. Iterate until the user approves the breakdown.
 
 ### 5. Publish the tickets to the configured tracker
 
 Publish the approved tickets. **How** depends on the configured tracker — the tickets are the same either way, only the shape of the blocking edges changes:
 
-- **Local markdown** → write `.scratch/<requirement-slug>/tickets.md`, all tickets in dependency order (blockers first), each with its "Blocked by" listing the titles it depends on. Use the **Tickets file template**.
-- **A real issue tracker** → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking / sub-issue relationship where it has one (mechanics in the issue-tracker doc); otherwise set each ticket's "Blocked by" to the blocking issues. Use the **Issue body template**. Apply the `ready-for-agent` triage label unless instructed otherwise — the tickets are agent-grabbable by construction.
+- **Local markdown** → write `.scratch/<requirement-slug>/tickets.md`, all tickets in dependency order (blockers first), each with its "Blocked by" listing the titles it depends on. Use [tickets-file-template.md](tickets-file-template.md).
+- **A real issue tracker** → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking / sub-issue relationship where it has one (mechanics in the issue-tracker doc); otherwise set each ticket's "Blocked by" to the blocking issues. Use [issue-body-template.md](issue-body-template.md). Apply the `ready-for-agent` triage label unless instructed otherwise — the tickets are agent-grabbable by construction.
 
 Do NOT close or modify any parent issue.
 
@@ -72,58 +65,8 @@ Each ticket is a thin vertical slice that cuts through ALL integration layers en
 
 A **wide refactor** is one mechanical change — rename a column, retype a shared symbol — whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping the build green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket — green is promised only there.
 
-### Tickets file template
+### Templates
 
-<tickets-file-template>
-
-# Tickets: <short name of the work>
-
-A one-line summary of what these tickets build. Reference the source spec if there is one.
-
-Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
-
-## <Ticket title>
-
-**What to build:** the end-to-end behaviour this ticket makes work, from the user's perspective — not a layer-by-layer implementation list.
-
-**Stories covered:** the numbered spec stories this ticket addresses (omit when the source has none).
-
-**Blocked by:** the titles of the tickets that gate this one, or "None — can start immediately".
-
-- [ ] Acceptance criterion 1
-- [ ] Acceptance criterion 2
-
-## <Ticket title>
-
-...
-
-</tickets-file-template>
-
-### Issue body template
-
-<issue-template>
-
-## Parent
-
-A reference to the parent issue on the tracker (if the source was an existing issue, otherwise omit this section).
-
-## What to build
-
-The end-to-end behaviour this ticket makes work, from the user's perspective — not layer-by-layer implementation.
-
-## Stories covered
-
-The numbered spec stories this ticket addresses (omit this section when the source has none).
-
-## Acceptance criteria
-
-- [ ] Criterion 1
-- [ ] Criterion 2
-
-## Blocked by
-
-- A reference to each blocking ticket, or "None — can start immediately".
-
-</issue-template>
+Both publish forms have a sibling template — [tickets-file-template.md](tickets-file-template.md) for local markdown, [issue-body-template.md](issue-body-template.md) for a real tracker.
 
 In either form, avoid specific file paths or code snippets — they go stale fast. Exception for prototype-derived snippets — the rule lives in [the prototype skill's "When done"](../prototype/SKILL.md).

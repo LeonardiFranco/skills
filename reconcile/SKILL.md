@@ -1,6 +1,6 @@
 ---
 name: reconcile
-description: Keep `.scratch` plan backlogs alive — verify DONE plans still hold, investigate BLOCKED ones, check TODO premises still stand. Covers `_backlog/plans/` and `<requirement>/plans/`. Read-only on source; writes only under those plan trees.
+description: Keep `.scratch` plan backlogs alive — verify DONE plans still hold, investigate BLOCKED ones, check TODO premises still stand. Covers `_backlog/plans/` and `<requirement>/plans/`. Use when returning to an existing plan backlog, after executors ran, or when another skill needs the backlog trued up before planning or executing. Read-only on source; writes only under those plan trees.
 license: MIT
 ---
 

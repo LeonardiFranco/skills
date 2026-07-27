@@ -6,7 +6,7 @@ Human-facing layout for `/setup-fleonardi-skills`. **Not copied into the repo.**
 
 | File | Purpose |
 |------|---------|
-| `issue-tracker.md` | Where issues live and how to create, query, and update them; includes **Wayfinding operations** for `/wayfinder` and, when configured, a **PR host** section (host commands for `/execute`'s publish tail and `/review-pr`) |
+| `issue-tracker.md` | Where issues live and how to create, query, and update them; includes **Wayfinding operations** for `/wayfinder` and, when configured, a **PR host** section (host commands for `/publish-pr` and `/review-pr`) |
 | `triage-labels.md` | Triage role → label/tag mapping |
 | `domain.md` | Where `CONTEXT.md` and ADRs live |
 | `preferences.example.md` | Template for personal `local/preferences.md` — copy, don't commit |
@@ -21,3 +21,11 @@ Human-facing layout for `/setup-fleonardi-skills`. **Not copied into the repo.**
 | `domain.md` | Overrides team domain doc layout |
 
 Edit config files directly. Re-run setup only to switch issue trackers or reset from scratch.
+
+## Canonical consumer preamble
+
+Consumer skills carry this identical wording (specifics of which configs they need may follow it):
+
+> Before acting, read the config this skill needs from `docs/agents/` — prefer
+> `docs/agents/local/<name>.md` over `docs/agents/<name>.md` when both exist. If
+> missing or incomplete, ask the user to run `/setup-fleonardi-skills`.

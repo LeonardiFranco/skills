@@ -7,8 +7,7 @@ surface but unverified by this setup — verify each on first use and correct in
 
 ## PR host: GitHub
 
-Repo `<owner>/<repo>`. Auth: `gh auth login`. Consumed by `/execute`'s publish-on-approve tail
-and `/review-pr`.
+Repo `<owner>/<repo>`. Auth: `gh auth login`. Consumed by `/publish-pr` and `/review-pr`.
 
 | Operation | Command |
 |---|---|

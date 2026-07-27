@@ -11,7 +11,7 @@ Scaffold the per-repo configuration that the engineering skills assume:
 - **Issue tracker** — where issues live (GitHub, GitLab, Azure DevOps, local markdown, or custom)
 - **PR host** — where pull requests live and the commands to drive them (may differ from the
   tracker: a repo can track issues in local markdown yet host PRs on Azure DevOps). Consumed by
-  `/execute`'s publish-on-approve tail and `/review-pr`
+  `/publish-pr` and `/review-pr`
 - **Triage labels** — the strings used for the five canonical triage roles
 - **Domain docs** — where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
 - **Preferences** (personal only) — optional `local/preferences.md` for environment notes; team repo commits `docs/agents/preferences.example.md` only
@@ -62,9 +62,7 @@ Look at the current repo to understand its starting state. Read whatever exists;
 
 Summarise what's present and what's missing. State which scope you're writing (**personal** vs **team**) from the invocation. Walk the user through the three decisions **one at a time**.
 
-**Section A — Issue tracker.**
-
-> Explainer: The "issue tracker" is where issues live for this repo. Skills like `plan`, `to-tickets`, `triage`, `to-spec`, and `wayfinder` read from and write to it — they need to know whether to call `gh issue create`, `az boards work-item create`, write markdown under `.scratch/`, or follow some other workflow. Each tracker template includes a **Wayfinding operations** section for `/wayfinder`.
+**Section A — Issue tracker.** (What it is and who consumes it: [readme.md](./readme.md).)
 
 Default posture: infer from the repo. If `.azuredevops/` or existing team `docs/agents/issue-tracker.md` mentions Azure DevOps, propose that. If a `git remote` points at GitHub, propose GitHub. If GitLab, propose GitLab. A code host doesn't rule out Linear — many teams host code on GitHub but track work in Linear, so still offer it. Otherwise offer:
 
@@ -77,12 +75,8 @@ Default posture: infer from the repo. If `.azuredevops/` or existing team `docs/
 
 For **GitHub** or **GitLab** only, ask whether external PRs/MRs are a triage surface (default: no).
 
-**Section A2 — PR host.**
-
-> Explainer: independent of where issues live, `/execute`'s publish-on-approve tail and
-> `/review-pr` need the commands to drive this repo's pull requests — create a draft PR, read
-> metadata, list and post comment threads, fetch the merge ref. Skills carry no host commands
-> themselves; this section is where they resolve them at runtime.
+**Section A2 — PR host.** (Consumers: `/publish-pr` and `/review-pr` — skills carry no host
+commands themselves; this section is where they resolve them at runtime.)
 
 Infer from `git remote -v` (`dev.azure.com` → Azure DevOps, `github.com` → GitHub, GitLab
 likewise) and confirm. Written as a `## PR host: <name>` section **appended to
@@ -96,15 +90,11 @@ description conventions (length caps, sections posted as comments). Every seed k
 No PR flow wanted, or no remote host? Record `PR host: none` so consumer skills stop cleanly
 instead of guessing.
 
-**Section B — Triage label vocabulary.**
-
-> Explainer: When `/triage` processes an incoming issue it moves through a state machine — needs evaluation, waiting on reporter, ready for an AFK agent, ready for a human, or won't-fix. It applies labels (or your tracker's equivalent) that must match strings you've actually configured. If this repo already uses different names (e.g. `bug:triage` instead of `needs-triage`), map them here so triage applies the right ones instead of creating duplicates.
+**Section B — Triage label vocabulary.** (Consumed by `/triage`; details: [triage-labels.md](./triage-labels.md).)
 
 The five canonical roles: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. Default: each role's string equals its name. Ask if any should map to different label/tag strings in the actual tracker.
 
-**Section C — Domain docs.**
-
-> Explainer: Some skills (`improve-architecture`, `tdd`) read a `CONTEXT.md` for the project's domain language and `docs/adr/` for past decisions. They need to know whether this repo has one global context or several (e.g. a monorepo with separate frontend/backend contexts) so they look in the right place.
+**Section C — Domain docs.** (Consumers and reading rules: [domain.md](./domain.md).)
 
 - **Single-context** — one `CONTEXT.md` + `docs/adr/` at the repo root (most repos)
 - **Multi-context** — `CONTEXT-MAP.md` at the root pointing to per-context `CONTEXT.md` files
@@ -117,7 +107,7 @@ Show drafts for:
 - The three config files in the write target (`issue-tracker.md`, `triage-labels.md`, `domain.md`) under `docs/agents/local/` **or** `docs/agents/` per scope
 - `.scratch/README.md` and `.scratch/_backlog/plans/README.md` (if missing)
 
-For **personal** scope only: offer to copy `preferences.example.md` → `docs/agents/local/preferences.md` if the user wants environment notes. Do not write personal content without asking. When a PR host was configured, also offer the **publish-on-approve opt-in** for `preferences.md` (consumed by `/execute`: on APPROVE — commit in the worktree, push, `write-pr`, publish a draft PR per the PR host section; never on REVISE/BLOCK; draft→active stays human).
+For **personal** scope only: offer to copy `preferences.example.md` → `docs/agents/local/preferences.md` if the user wants environment notes. Do not write personal content without asking. When a PR host was configured, also offer the **publish-on-approve opt-in** for `preferences.md` — read by `/execute` on APPROVE, which then invokes `/publish-pr` (commit, push, description, draft PR; never on REVISE/BLOCK; draft→active stays human).
 
 ### 4. Write
 
@@ -125,7 +115,7 @@ Determine **`$TARGET`**: `docs/agents/local` (default) or `docs/agents` (when in
 
 Write (or update):
 
-- `docs/agents/preferences.example.md` (team template; skip if present and user-edited)
+- [preferences.example.md](./preferences.example.md) → `docs/agents/preferences.example.md` (team template; skip if present and user-edited)
 - Issue tracker seed → `$TARGET/issue-tracker.md` (pick github / gitlab / azure-devops / linear / local / custom)
 - PR host section (Section A2) → **appended to** `$TARGET/issue-tracker.md`
 - [triage-labels.md](./triage-labels.md) → `$TARGET/triage-labels.md`

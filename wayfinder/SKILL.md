@@ -14,7 +14,7 @@ Each ticket resolves a decision; the map is done when nothing is left to decide 
 
 ## Agent skills config
 
-Before acting, read issue tracker config from `docs/agents/` — prefer `docs/agents/local/issue-tracker.md` when present. Consult **Wayfinding operations** for maps, tickets, blocking, claiming, and frontier queries. If missing, ask the user to run `/setup-fleonardi-skills`.
+Before acting, read the config this skill needs from `docs/agents/` — prefer `docs/agents/local/<name>.md` over `docs/agents/<name>.md` when both exist. If missing or incomplete, ask the user to run `/setup-fleonardi-skills`. Here that means the issue tracker config; consult its **Wayfinding operations** section for maps, tickets, blocking, claiming, and frontier queries.
 
 ## Refer by name
 
@@ -73,7 +73,6 @@ Every ticket is **HITL** — human in the loop, worked *with* a human who speaks
 - **Research** (AFK) — read external docs, APIs, or knowledge bases; output a linked markdown summary.
 - **Prototype** (HITL) — cheap concrete artifact via `/prototype`; offer the copy-paste command when the session ends; link the asset.
 - **Grilling** (HITL) — `/grilling` + `/domain-modeling`, one question at a time. Default.
-- **Task** (HITL or AFK) — manual work that must happen before a *decision* can be made; it earns its place by unblocking a decision, not by delivering the destination. Automate where possible (AFK), otherwise hand a precise checklist (HITL); record resulting facts later tickets need (credentials location, new URLs, row counts).
 
 ## Fog of war
 

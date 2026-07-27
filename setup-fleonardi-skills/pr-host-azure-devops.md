@@ -9,8 +9,7 @@ conventions from the team's actual practice (ask; don't invent).
 
 Org `<org>`, project `<project>`, repo `<repo>`. Auth: `az login`, then
 `az devops configure --defaults organization=https://dev.azure.com/<org> project=<project>`
-(requires the `azure-devops` CLI extension). Consumed by `/execute`'s publish-on-approve tail
-and `/review-pr`.
+(requires the `azure-devops` CLI extension). Consumed by `/publish-pr` and `/review-pr`.
 
 | Operation | Command |
 |---|---|

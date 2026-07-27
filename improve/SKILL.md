@@ -1,6 +1,6 @@
 ---
 name: improve
-description: Senior-advisor front door for improving a codebase end to end. Use when asked to improve a codebase, decide where to take a project next, explore direction, or run an audit-to-implementation loop without naming a specific step. Routes to and orchestrates the recon, audit, plan, vet, gap-hunt, execute, and reconcile skills, and hosts the family's shared contracts. Read-only on source; never edits code.
+description: Senior-advisor front door for improving a codebase end to end. Use when asked to improve a codebase, decide where to take a project next, or run an audit-to-implementation loop without naming a specific step. Orchestrates the audit, plan, vet, gap-hunt, execute, duel, and reconcile skills (recon runs via its shared playbook) and hosts the family's contracts.
 license: MIT
 ---
 
@@ -17,12 +17,12 @@ This skill is thin on purpose. It does two things the specialists can't: it hold
 | Skill | Owns | Reach for it when |
 |---|---|---|
 | [`recon`](../recon/SKILL.md) | Map the repo → a recon brief | Onboarding, verification gates, or repo shape before anything else |
-| [`audit`](../audit/SKILL.md) | Recon + audit + vet → a prioritized findings table | You need to know what's wrong / where the codebase stands |
-| [`plan`](../plan/SKILL.md) | A finding or description → a self-contained handoff plan in `.scratch/_backlog/plans/` | A finding is chosen, or the user already knows the change |
+| [`audit`](../audit/SKILL.md) | Recon + audit + an internal verification pass over its own findings → a prioritized findings table | You need to know what's wrong / where the codebase stands |
+| [`plan`](../plan/SKILL.md) | A finding or description → a self-contained handoff plan in `.scratch/_backlog/plans/` or `.scratch/<requirement>/plans/` | A finding is chosen, or the user already knows the change |
 | [`vet`](../vet/SKILL.md) | Autonomously review one plan or spec at the functional altitude + apply improvements | A spec exists and needs vetting without an interview |
 | [`gap-hunt`](../gap-hunt/SKILL.md) | Hunt one spec for grounded omissions → findings table for selection | A spec might be missing user features; before publishing or after a clean review |
 | [`execute`](../execute/SKILL.md) | Dispatch an executor subagent on one plan + tech-lead review | A plan is ready and the user wants it built |
-| [`reconcile`](../reconcile/SKILL.md) | Keep `.scratch/_backlog/plans/` honest against the current HEAD | Returning to an existing backlog, or after executors ran |
+| [`reconcile`](../reconcile/SKILL.md) | Keep both plan trees (`.scratch/_backlog/plans/` and `.scratch/<requirement>/plans/`) honest against the current HEAD | Returning to an existing backlog, or after executors ran |
 | [`duel`](../duel/SKILL.md) | Two independent candidates for one brief → blind-judged winner in `.scratch/_duel/<slug>/` | The artifact matters enough to pay for two drafts |
 
 Each is independently invocable; this front door is for when the user hasn't picked one, or wants several chained.
@@ -33,7 +33,7 @@ Each is independently invocable; this front door is for when the user hasn't pic
 
 - Surface 2–4 **grounded** directions — each citing evidence from the repo, drawn from the direction category in [the audit playbook](references/audit-playbook.md). A suggestion that could apply to any project in the category is noise, not a direction.
 - Give each its honest trade-offs and a coarse effort feel. Strategy is the maintainer's; offer options, don't sell one.
-- When a direction firms up, offer two exits: stress-test it first via `/grill-then-plan` (relentless interview → settled decisions → plans; right when the direction still hides unmade decisions), or hand it straight to `plan` as a *design/spike* plan (investigate, prototype, define the interface, list open questions; right when the open questions need code, not conversation).
+- When a direction firms up, offer two exits: stress-test it first via `/grilling`, then hand the settled tree to `/plan` (the `grill` router's compose path; right when the direction still hides unmade decisions), or hand it straight to `plan` as a *design/spike* plan (investigate, prototype, define the interface, list open questions; right when the open questions need code, not conversation).
 
 ## Orchestrate — carry state across the handoffs
 

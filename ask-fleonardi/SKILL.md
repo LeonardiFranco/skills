@@ -68,13 +68,15 @@ Starting situations that generate work, then merge onto a flow.
 
 For codebase improvement, not greenfield features. The advisor **never edits source** — it audits, plans, and dispatches an executor.
 
-The family table — which member owns which step — lives in [`improve`](../improve/SKILL.md); read it there, don't duplicate it here. Members: **`/recon`**, **`/audit`**, **`/plan`**, **`/vet`**, **`/gap-hunt`**, **`/execute`**, **`/reconcile`**, fronted by **`/improve`**.
+The family table — which member owns which step — lives in [`improve`](../improve/SKILL.md); read it there, don't duplicate it here. Members: **`/recon`**, **`/audit`**, **`/plan`**, **`/vet`**, **`/gap-hunt`**, **`/execute`**, **`/reconcile`**, **`/duel`**, fronted by **`/improve`**.
 
 **Typical chain:** **`/improve`** → (optional **`/audit`**) → **`/plan`** selected findings → **`/execute`** greenlit plans → **`/reconcile`** later. **`/roast`** is `/audit` with a functional/UX lens and a candid tone, written to a markdown report — reach for it when you want the user's-chair critique rather than the nine-category health pass. **`/plan`** ends by offering a hot **`/execute`** dispatch — taking it saves a cold session rebuilding context.
 
 **Quality gates on demand:** **`/vet`** and **`/gap-hunt`** (owns and triggers in the family table; interview form of vet: **`/grill-plan`**), plus **`/duel`** — two independent candidates for one brief, blind-judged by **`/judge`**; reach for it when the artifact matters enough to pay for two drafts.
 
-**Git choreography around `/execute`**: `/execute` isolates itself in a worktree, and with the publish-on-approve opt-in in local steering it commits the executor's changes, pushes the branch, and publishes a draft PR on APPROVE — **`/review-pr <id>`** then reviews it with fresh eyes (comments only, never votes). Without the opt-in, **`/write-pr`** produces a PR description file. **`/cleanup`** resets to the synced default branch when you're done.
+**Git choreography around `/execute`**: `/execute` isolates itself in a worktree, and with the publish-on-approve opt-in in local steering it invokes **`/publish-pr`** on APPROVE — commit, push, description, draft PR — after which **`/review-pr <id>`** reviews it with fresh eyes (comments only, never votes). Without the opt-in, **`/write-pr`** produces a PR description file. **`/publish-pr`** also works standalone: say "publish the PR" to publish the current feature branch as a draft. **`/cleanup`** resets to the synced default branch when you're done.
+
+**Board-native path (Azure DevOps).** When work is tracked as Boards work items rather than loose `.scratch/` files, **`/publish-plan`** mirrors a `.scratch/` plan onto the tracker as a work item — the plan file stays the source of truth, the item is distribution. **`/execute-user-story <id>`** then runs one story end to end: it fetches the story and its attachments, hands the plan to **`/execute`**, and brackets that run with the tracker work — driving the story and its subtasks Active→Resolved and linking the PR on APPROVE.
 
 Verification gates in plans come from **`AGENTS.md`** and project steering — never invented by the advisor.
 
@@ -113,7 +115,7 @@ Off the main flows entirely.
 
 ## Grilling variants
 
-Want a relentless interview? **`/grill`** routes to the right variant (generic, me, plan, then-plan, with-docs, yagni). Default: **`/grill-with-docs`** when a codebase is present.
+Want a relentless interview? **`/grill`** routes to the right variant (generic, me, plan, with-docs) and documents the compose paths — grilling into `/plan`, or grilling through the `/yagni` lens. Default: **`/grill-with-docs`** when a codebase is present.
 
 ---
 
@@ -128,8 +130,10 @@ Want a relentless interview? **`/grill`** routes to the right variant (generic, 
 | Roast the app's functionality, warts on display | **`/roast`** |
 | Review a branch for standards + spec conformance | **`/conformance`** |
 | Implement an approved plan (path under `.scratch/`) | **`/execute`** |
+| Publish a `.scratch/` plan to the tracker as a work item | **`/publish-plan`** |
+| Execute a user story / work item end to end (Azure DevOps) | **`/execute-user-story <id>`** |
 | Reconcile the plan backlog (DONE/BLOCKED/premises) | **`/reconcile`** |
-| Cut an over-engineered design or plan | **`/yagni`** (interview form: **`/grill-yagni`**) |
+| Cut an over-engineered design or plan | **`/yagni`** (interview form: **`/grilling`** through the `/yagni` lens — see **`/grill`**) |
 | Write or refresh this repo's `AGENTS.md` | **`/init-agents`** |
 | Resolve a merge / rebase conflict | **`/resolve-conflicts`** |
 | Script a manual setup or migration procedure | **`/wizard`** |
@@ -139,5 +143,6 @@ Want a relentless interview? **`/grill`** routes to the right variant (generic, 
 | Get two candidate plans and a verdict | **`/duel`** |
 | Reset to a fresh default branch when done | **`/cleanup`** |
 | Write a PR description | **`/write-pr`** |
+| Publish the current branch as a draft PR | **`/publish-pr`** |
 | Review a pull request with fresh eyes (comments, no vote) | **`/review-pr <id>`** |
 | Not sure | stay here — describe your situation |
