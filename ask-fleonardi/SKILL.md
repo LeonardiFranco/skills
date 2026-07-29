@@ -74,7 +74,7 @@ The family table — which member owns which step — lives in [`improve`](../im
 
 **Quality gates on demand:** **`/vet`** and **`/gap-hunt`** (owns and triggers in the family table; interview form of vet: **`/grill-plan`**), plus **`/duel`** — two independent candidates for one brief, blind-judged by **`/judge`**; reach for it when the artifact matters enough to pay for two drafts.
 
-**Git choreography around `/execute`**: `/execute` isolates itself in a worktree, and with the publish-on-approve opt-in in local steering it invokes **`/publish-pr`** on APPROVE — commit, push, description, draft PR — after which **`/review-pr <id>`** reviews it with fresh eyes (comments only, never votes). Without the opt-in, **`/write-pr`** produces a PR description file. **`/publish-pr`** also works standalone: say "publish the PR" to publish the current feature branch as a draft. **`/cleanup`** resets to the synced default branch when you're done.
+**Git choreography around `/execute`**: `/execute` isolates itself in a worktree, and with the publish-on-approve opt-in in local steering it invokes **`/publish-pr`** on APPROVE — commit, push, description, draft PR — after which **`/review-pr <id>`** reviews it with fresh eyes (confirm-then-post comments, never votes). Without the opt-in, **`/write-pr`** produces a PR description file. **`/publish-pr`** also works standalone: say "publish the PR" to publish the current feature branch as a draft. **`/cleanup`** resets to the synced default branch when you're done.
 
 **Board-native path (Azure DevOps).** When work is tracked as Boards work items rather than loose `.scratch/` files, **`/publish-plan`** mirrors a `.scratch/` plan onto the tracker as a work item — the plan file stays the source of truth, the item is distribution. **`/execute-user-story <id>`** then runs one story end to end: it fetches the story and its attachments, hands the plan to **`/execute`**, and brackets that run with the tracker work — driving the story and its subtasks Active→Resolved and linking the PR on APPROVE.
 
@@ -144,5 +144,5 @@ Want a relentless interview? **`/grill`** routes to the right variant (generic, 
 | Reset to a fresh default branch when done | **`/cleanup`** |
 | Write a PR description | **`/write-pr`** |
 | Publish the current branch as a draft PR | **`/publish-pr`** |
-| Review a pull request with fresh eyes (comments, no vote) | **`/review-pr <id>`** |
+| Review a pull request with fresh eyes (confirm-then-post comments, never votes) | **`/review-pr <id>`** |
 | Not sure | stay here — describe your situation |
