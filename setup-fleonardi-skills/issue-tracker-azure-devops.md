@@ -1,17 +1,16 @@
 # Issue tracker: Azure DevOps Boards
 
 Issues for this repo are tracked as **work items on Azure DevOps Boards**, not GitHub/GitLab issues
-and not local markdown. The engineering skills (`to-tickets`, `triage`, `to-spec`, etc.) should
+and not local markdown. The engineering skills (`triage`, `publish-plan`, etc.) should
 read and write work items through the `az boards` CLI.
 
 - **Organization**: `https://dev.azure.com/<org>`
 - **Project**: `<project>`
 - **CLI**: the [Azure CLI](https://learn.microsoft.com/cli/azure/) with the `azure-devops` extension.
 
-> Note: an in-repo `.scratch/` tree may also exist for drafting (specs in `.scratch/<requirement>/SPEC.md`, plans in
-> `.scratch/_backlog/plans/`, local issues under `.scratch/<requirement>/issues/`). Unless the team says otherwise,
-> treat Azure DevOps Boards as the source of truth and promote anything durable from `.scratch/`
-> into a Boards work item.
+> Note: durable engineering plans live under `openspec/changes/`; `.scratch/` is disposable drafts only.
+> Treat Azure DevOps Boards as the distribution/status surface; the OpenSpec change folder stays the
+> engineering source of truth for decisions and done criteria.
 
 ## One-time setup
 
@@ -62,21 +61,21 @@ az boards work-item relation add --id <childId> --relation-type parent --target-
 
 ## When a skill says "publish a plan to the issue tracker"
 
-Mirror the plan file 1:1 as a Boards work item — the plan file stays the source of truth; the work item is distribution.
+Mirror an OpenSpec change as a Boards work item — the change folder stays the source of truth; the work item is distribution.
 
 1. Preflight: `az` authenticated with the `azure-devops` extension configured. If not, skip publish and say why.
-2. **Sensitive plans**: before publishing plans describing vulnerabilities, credential locations, or other sensitive findings, warn and get explicit confirmation when the project is publicly visible.
-3. Per plan: create a work item with the plan title and plan file body as description:
+2. **Sensitive plans**: before publishing changes describing vulnerabilities, credential locations, or other sensitive findings, warn and get explicit confirmation when the project is publicly visible.
+3. Per change: create a work item with the proposal title and a body synthesized from `proposal.md` + `tasks.md` done criteria:
 
 ```bash
 az boards work-item create \
-  --title "<plan title>" \
+  --title "<proposal title>" \
   --type "Task" \
-  --description "$(cat <plan file>)"
+  --description "<synthesized body>"
 ```
 
-4. Tag with `plan` and the plan Status `Category` value via `System.Tags` only if those tags already exist (read current tags first; skip rather than fail).
-5. Record the returned work-item id in the plan's Status block and the plans README.
+4. Tag with `plan` and the proposal Status `Category` value via `System.Tags` only if those tags already exist (read current tags first; skip rather than fail).
+5. Record the returned work-item id in `proposal.md` Status and `openspec/changes/README.md`.
 
 ## When a skill says "fetch the relevant ticket"
 
@@ -113,14 +112,3 @@ Append conversation/history as work-item comments (discussion), not by mutating 
 ```bash
 az boards work-item update --id <id> --discussion "<comment>"
 ```
-
-## Wayfinding operations (`/wayfinder`)
-
-- **Map**: a work item tagged `wayfinder:map`; its description holds Notes, Decisions so far, and Fog. Open tickets are **not** listed on the map — find them by query.
-- **Ticket**: a child work item linked to the map via parent relation. Description holds only `## Question` until resolution.
-- **Type tags**: `wayfinder:research`, `wayfinder:prototype`, `wayfinder:grilling`, `wayfinder:task` (in `System.Tags`)
-- **Claiming**: set `System.AssignedTo` to yourself **before any work** (`az boards work-item update --id <id> --assigned-to <you>`) — the assignee *is* the claim; then re-read (`az boards work-item show --id <id>`) to confirm the assignee is you, and back off to another ticket if it isn't. Never reassign someone else's claim, however stale — the human releases claims
-- **Blocking**: predecessor/successor links or `@<id>` references in description per team convention
-- **Frontier query**: WIQL for open child work items of the map with empty `System.AssignedTo`, unblocked per native semantics
-- **Resolution**: append answer as a discussion comment, set state to closed/done, append a one-line gist to the map description's Decisions so far
-- **Create-then-wire**: create all ticket work items first, then add blocking relations in a second pass

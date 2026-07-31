@@ -1,6 +1,6 @@
 ---
 name: gap-hunt
-description: Hunt one spec for omissions — user features and behaviors its own scope implies but never specs — and report grounded gaps for the user to select. Use when asked to gap-hunt a spec, find what a spec is missing, or check spec coverage; also reached by vet after a clean evaluative pass and by to-spec before publishing. Report-only — writes nothing.
+description: Hunt one spec for omissions — user features and behaviors its own scope implies but never specs — and report grounded gaps for the user to select. Use when asked to gap-hunt a spec, find what a spec is missing, or check spec coverage; also reached by vet after a clean evaluative pass and before archiving an OpenSpec change. Report-only — writes nothing.
 license: MIT
 ---
 
@@ -16,7 +16,7 @@ A gap survives only if it cites a **hook**: a specific place in (i) the spec's o
 
 ## Resolve
 
-The argument is one spec: a path, or the draft in conversation when `to-spec` routes here pre-publication. Read that spec in full — and only that spec. Family and sibling documents are read by the parity lens subagent in its own window, never pulled into yours.
+The argument is one spec: a path under `openspec/specs/` or a change delta under `openspec/changes/<slug>/specs/`, or a draft in conversation. Read that spec in full — and only that spec. Family and sibling documents are read by the parity lens subagent in its own window, never pulled into yours.
 
 From the spec alone, enumerate the coverage frame: every **actor** its scope touches and every **lifecycle stage** of the thing it governs. This frame is what "exhaustive" means below.
 
@@ -45,6 +45,6 @@ Then, beneath the table, **Horizon**: at most 3 one-liners, plainly marked as un
 
 ## Select & route
 
-The user selects; nothing proceeds unselected. Accepted gaps route onward — a `to-spec`-style edit of the spec, or entries in its open-questions section — done by whoever the user sends them to, not by you.
+The user selects; nothing proceeds unselected. Accepted gaps route onward — edit the OpenSpec spec/delta via `/plan` or `/vet`, or entries in open-questions — done by whoever the user sends them to, not by you.
 
 **Completion criterion:** every actor and lifecycle stage in the coverage frame is accounted for — covered, explicitly out-of-scope, or a finding; every reported gap carries a hook you verified yourself; Horizon holds at most 3 clearly-marked items; and the user has a table to select from.

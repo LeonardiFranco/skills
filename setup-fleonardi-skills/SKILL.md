@@ -15,7 +15,7 @@ Scaffold the per-repo configuration that the engineering skills assume:
 - **Triage labels** — the strings used for the five canonical triage roles
 - **Domain docs** — where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
 - **Preferences** (personal only) — optional `local/preferences.md` for environment notes; team repo commits `docs/agents/preferences.example.md` only
-- **Scratch workspace** — gitignored `.scratch/` tree with master index and empty backlog plans index
+- **OpenSpec + scratch** — committed `openspec/` (changes + specs) and gitignored `.scratch/` for disposable drafts only
 
 **Steering boundary:** `AGENTS.md` and `CLAUDE.md` are team-owned project steering. This skill **never edits them** — author or refresh `AGENTS.md` with `/init-agents`.
 
@@ -46,6 +46,8 @@ docs/agents/local/
 .scratch/
 ```
 
+Do **not** gitignore `openspec/`.
+
 ### 1. Explore
 
 Look at the current repo to understand its starting state. Read whatever exists; don't assume:
@@ -55,7 +57,8 @@ Look at the current repo to understand its starting state. Read whatever exists;
 - `CONTEXT.md` and `CONTEXT-MAP.md` at the repo root
 - `docs/adr/` and any `src/*/docs/adr/` directories
 - `docs/agents/` and `docs/agents/local/` — prior setup output? (`preferences.md` is personal-only)
-- `.scratch/` — see `.scratch/README.md`: `<requirement>/` (spec, tickets, issues, plans) and `_backlog/plans/` for cross-cutting advisor work
+- `openspec/` — `config.yaml`, `changes/README.md`, `specs/`
+- `.scratch/` — disposable only (`_write-pr/`, `_pr-review/`); legacy plan trees are stale
 - `.azuredevops/` or Azure DevOps references in CI — sign of Azure DevOps Boards
 
 ### 2. Present findings and ask
@@ -70,7 +73,7 @@ Default posture: infer from the repo. If `.azuredevops/` or existing team `docs/
 - **GitLab** — `glab` CLI
 - **Azure DevOps Boards** — `az boards` with the `azure-devops` extension
 - **Linear** — Linear MCP server (no CLI; OAuth-gated tools)
-- **Local markdown** — specs in `.scratch/<requirement>/SPEC.md`, tickets in `.scratch/<requirement>/tickets.md`, issues in `.scratch/<requirement>/issues/`
+- **Local markdown** — OpenSpec under `openspec/`; no separate tracker distribution for plans
 - **Other** — freeform prose from the user
 
 For **GitHub** or **GitLab** only, ask whether external PRs/MRs are a triage surface (default: no).
@@ -105,7 +108,8 @@ Show drafts for:
 
 - `docs/agents/preferences.example.md` (team template; skip if present and user-edited)
 - The three config files in the write target (`issue-tracker.md`, `triage-labels.md`, `domain.md`) under `docs/agents/local/` **or** `docs/agents/` per scope
-- `.scratch/README.md` and `.scratch/_backlog/plans/README.md` (if missing)
+- `.scratch/README.md` (if missing)
+- `openspec/config.yaml`, `openspec/changes/README.md`, `openspec/specs/` (if missing)
 
 For **personal** scope only: offer to copy `preferences.example.md` → `docs/agents/local/preferences.md` if the user wants environment notes. Do not write personal content without asking. When a PR host was configured, also offer the **publish-on-approve opt-in** for `preferences.md` — read by `/execute` on APPROVE, which then invokes `/publish-pr` (commit, push, description, draft PR; never on REVISE/BLOCK; draft→active stays human).
 
@@ -123,12 +127,16 @@ Write (or update):
 
 Seed templates in this folder: `issue-tracker-github.md`, `issue-tracker-gitlab.md`, `issue-tracker-azure-devops.md`, `issue-tracker-linear.md`, `issue-tracker-local.md`; PR host: `pr-host-azure-devops.md`, `pr-host-github.md`.
 
+**OpenSpec** (committed — write regardless of personal vs team scope if missing):
+
+- Ensure `openspec/changes/README.md` and `openspec/specs/` exist
+- Optionally seed `openspec/config.yaml` with stack notes from recon (skip if present)
+
 **Scratch workspace** (personal, gitignored — write regardless of personal vs team scope):
 
 - [scratch-readme.md](./scratch-readme.md) → `.scratch/README.md` (skip if present and user-edited)
-- [scratch-backlog-plans-readme.md](./scratch-backlog-plans-readme.md) → `.scratch/_backlog/plans/README.md` (skip if present and user-edited)
 
-Create parent directories as needed. Do not delete existing plan files or requirement folders.
+Create parent directories as needed. Do not delete existing OpenSpec changes or legacy `.scratch` plan files.
 
 If files already exist in the target, update in place. Do not delete user additions outside the canonical three (`issue-tracker`, `triage-labels`, `domain`) or personal `preferences.md`.
 

@@ -41,25 +41,14 @@ Create a Linear issue with `create_issue` on the configured team. For a spec or 
 
 ## When a skill says "publish a plan to the issue tracker"
 
-Mirror the plan file 1:1 as a Linear issue — the plan file stays the source of truth; the issue is distribution.
+Mirror an OpenSpec change as a Linear issue — the change folder stays the source of truth; the issue is distribution.
 
 1. Preflight: Linear MCP authenticated. If not, skip publish and say why.
-2. **Sensitive plans**: before publishing plans describing vulnerabilities, credential locations, or other sensitive findings, warn and get explicit confirmation when the workspace or team is publicly visible.
-3. Per plan: `create_issue` with the plan title, full plan file contents as `description`, on the configured team.
-4. Apply labels `plan` and the plan Status `Category` value only if they already exist (skip rather than fail).
-5. Record the returned identifier (e.g. `KEY-123`) in the plan's Status block and the plans README.
+2. **Sensitive plans**: before publishing changes describing vulnerabilities, credential locations, or other sensitive findings, warn and get explicit confirmation when the workspace or team is publicly visible.
+3. Per change: `create_issue` with the proposal title and a body synthesized from `proposal.md` + `tasks.md`, on the configured team.
+4. Apply labels `plan` and the proposal Status `Category` value only if they already exist (skip rather than fail).
+5. Record the returned identifier (e.g. `KEY-123`) in `proposal.md` Status and `openspec/changes/README.md`.
 
 ## When a skill says "fetch the relevant ticket"
 
 Call `get_issue` with the identifier (`ENG-123`). The user will normally pass the identifier or a Linear URL containing it.
-
-## Wayfinding operations (`/wayfinder`)
-
-- **Map**: a Linear issue labelled `wayfinder:map`; its description holds Notes, Decisions so far, and Fog. Open tickets are **not** listed on the map — find them by query.
-- **Ticket**: a sub-issue of the map (`parentId` set to the map issue). Description holds only `## Question` until resolution.
-- **Type labels**: `wayfinder:research`, `wayfinder:prototype`, `wayfinder:grilling`, `wayfinder:task`
-- **Claiming**: assign yourself **before any work** (`update_issue` with `assignee`) — the assignee *is* the claim; then re-read (`get_issue`) to confirm the assignee is you, and back off to another ticket if it isn't. Never reassign someone else's claim, however stale — the human releases claims
-- **Blocking**: Linear `blockedBy` / `blocks` relations between issues
-- **Frontier query**: `list_issues` filtered to sub-issues of the map in an open state with **no assignee**, unblocked per native semantics
-- **Resolution**: `create_comment` with the answer, move to a completed state, append a one-line gist to the map description's Decisions so far
-- **Create-then-wire**: create all ticket issues first, then add blocking relations in a second pass

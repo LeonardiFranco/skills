@@ -44,7 +44,7 @@ Present the vetted findings ordered by leverage (impact ÷ effort, weighted by c
 
 Present **direction findings separately**, after the table — they're options for the maintainer to weigh, not problems ranked against bugs. 2–4 grounded suggestions max, each with evidence and trade-offs in a sentence or two. (For a deeper direction-only pass, the `improve` front door owns that conversation.)
 
-Then surface **dependency ordering** between findings (e.g. "characterization tests for module X must land before refactoring X") and **record rejections** — anything considered and dismissed, with one line of reasoning, so it isn't re-audited next run. If a `.scratch/_backlog/plans/` backlog already exists, append rejections to its "Findings considered and rejected" section; otherwise just state them.
+Then surface **dependency ordering** between findings (e.g. "characterization tests for module X must land before refactoring X") and **record rejections** — anything considered and dismissed, with one line of reasoning, so it isn't re-audited next run. If `openspec/changes/README.md` exists, append rejections to its "Findings considered and rejected" section; otherwise just state them.
 
 **Completion criterion:** a vetted, leverage-ordered findings table where every row was confirmed by your own read of the cited code; direction findings listed separately; an explicit "not audited" note; and rejections recorded. Stop there — selecting and planning is the `plan` skill's job (the `improve` front door orchestrates the handoff).
 
@@ -54,4 +54,4 @@ Then surface **dependency ordering** between findings (e.g. "characterization te
 - **`quick` / `deep`** (anywhere) → effort level; composes with everything (`quick security`).
 - **Focus argument** (`security`, `perf`, `tests`, …) → Recon, then audit only that category.
 - **`next` / `features` / `roadmap`** → Recon, then audit only the direction category, in more depth: 4–6 grounded suggestions, each with evidence, trade-offs, and a coarse effort estimate.
-- **`branch`** → recon at **`branch`** depth, then audit all categories scoped to the brief's branch scope. Usually no subagents. **Tag every finding `introduced` (by this branch) or `pre-existing` (in touched files)** and separate them in the table. If on the default branch or zero commits ahead, say so and offer a full audit. (For a compliance review of the same range — repo standards and originating spec, side by side — that's the `conformance` skill, not this variant.)
+- **`branch`** → recon at **`branch`** depth, then audit all categories scoped to the brief's branch scope. Usually no subagents. **Tag every finding `introduced` (by this branch) or `pre-existing` (in touched files)** and separate them in the table. If on the default branch or zero commits ahead, say so and offer a full audit.

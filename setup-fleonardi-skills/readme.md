@@ -6,7 +6,7 @@ Human-facing layout for `/setup-fleonardi-skills`. **Not copied into the repo.**
 
 | File | Purpose |
 |------|---------|
-| `issue-tracker.md` | Where issues live and how to create, query, and update them; includes **Wayfinding operations** for `/wayfinder` and, when configured, a **PR host** section (host commands for `/publish-pr` and `/review-pr`) |
+| `issue-tracker.md` | Where issues live and how to create, query, and update them; when configured, a **PR host** section (host commands for `/publish-pr` and `/review-pr`). Plans/changes live under `openspec/changes/`. |
 | `triage-labels.md` | Triage role → label/tag mapping |
 | `domain.md` | Where `CONTEXT.md` and ADRs live |
 | `preferences.example.md` | Template for personal `local/preferences.md` — copy, don't commit |

@@ -14,7 +14,7 @@ Two entry paths; same output:
 
 | Path              | Scope source                                                             |
 | ----------------- | ------------------------------------------------------------------------ |
-| **Plan-driven** (via `publish-pr`'s execute entry) | Plan file (done criteria, test plan, risk, in-scope paths) + branch diff |
+| **Plan-driven** (via `publish-pr`'s execute entry) | OpenSpec change folder (`tasks.md` done criteria / manual verify, `proposal.md` risk & why, design in-scope) + branch diff |
 | **Standalone**    | Branch diff + commit log on the current branch                           |
 
 Steering discovery and fallback template: [references/steering-discovery.md](references/steering-discovery.md). Default skeleton when no repo template exists: [references/default-pr-template.md](references/default-pr-template.md).
@@ -39,7 +39,7 @@ git log <base>..HEAD --oneline
 git diff <base>..HEAD --stat
 ```
 
-**Plan-driven:** also read the plan file from context (done criteria, manual test plan, risk, "Why this matters").
+**Plan-driven:** also read the OpenSpec change from context (`proposal.md`, `tasks.md`, `design.md` — done criteria, manual verify, risk, why).
 
 **Completion criterion:** you can state the commit range, major areas touched (from paths, not a raw file dump), and whether the diff exceeds plan scope (note in follow-up section if so).
 

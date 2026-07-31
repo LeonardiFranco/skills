@@ -32,25 +32,14 @@ Create a GitLab issue.
 
 ## When a skill says "publish a plan to the issue tracker"
 
-Mirror the plan file 1:1 as a GitLab issue — the plan file stays the source of truth; the issue is distribution.
+Mirror an OpenSpec change as a GitLab issue — the change folder stays the source of truth; the issue is distribution.
 
 1. Preflight: `glab auth status` and a GitLab remote. If either fails, skip publish and say why.
-2. **Sensitive plans**: before publishing plans describing vulnerabilities, credential locations, or other sensitive findings, check project visibility. If the project is public, warn and get explicit confirmation first.
-3. Per plan: `glab issue create --title "<plan title>" --description "$(cat <plan file>)"` (use a heredoc for multi-line bodies).
-4. Apply labels `plan` and the plan Status `Category` value only if they already exist (skip rather than fail).
-5. Record the returned issue URL in the plan's Status block and the plans README.
+2. **Sensitive plans**: before publishing changes describing vulnerabilities, credential locations, or other sensitive findings, check project visibility. If the project is public, warn and get explicit confirmation first.
+3. Per change: synthesize a body from `proposal.md` + `tasks.md` done criteria; create via `glab issue create`.
+4. Apply labels `plan` and the proposal Status `Category` value only if they already exist (skip rather than fail).
+5. Record the returned issue URL in `proposal.md` Status and `openspec/changes/README.md`.
 
 ## When a skill says "fetch the relevant ticket"
 
 Run `glab issue view <number> --comments`.
-
-## Wayfinding operations (`/wayfinder`)
-
-- **Map**: a GitLab issue labelled `wayfinder:map`; its description holds Notes, Decisions so far, and Fog. Open tickets are **not** listed on the map — find them by query.
-- **Ticket**: a child issue linked to the map (reference the map issue in the description or use GitLab issue links). Description holds only `## Question` until resolution.
-- **Type labels**: `wayfinder:research`, `wayfinder:prototype`, `wayfinder:grilling`, `wayfinder:task`
-- **Claiming**: assign yourself **before any work** (`glab issue update <number> --assignee <you>`) — the assignee *is* the claim; then re-read to confirm the assignee is you, and back off to another ticket if it isn't. Never reassign or unassign someone else's claim, however stale — the human releases claims
-- **Blocking**: GitLab blocked-by issue links (`/blocks`, `/blocked_by` in descriptions or native linking)
-- **Frontier query**: list open, **unassigned** child issues of the map, unblocked per native semantics
-- **Resolution**: post the answer as a note, close the issue, append a one-line gist to the map description's Decisions so far
-- **Create-then-wire**: create all ticket issues first, then add blocked-by links in a second pass

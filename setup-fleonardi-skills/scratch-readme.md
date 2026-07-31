@@ -1,56 +1,25 @@
 # Scratch workspace
 
-Personal drafting area (gitignored). Consumer skills read this file first as the master index.
+Personal drafting area (gitignored). Consumer skills read this file first as the master index for *disposable* drafts only.
+
+**Plans and specs live in OpenSpec**, not here:
+
+- Active work → `openspec/changes/<slug>/`
+- Archived truth → `openspec/specs/<domain>/spec.md`
+- Status board → `openspec/changes/README.md`
 
 ## Layout
 
 ```
 .scratch/
-├── README.md                 ← you are here (requirements index; not the plan backlog)
-├── <requirement-slug>/
-│   ├── SPEC.md
-│   ├── tickets.md
-│   ├── issues/
-│   └── plans/
-│       ├── README.md
-│       └── <NN>-<slug>.md
-├── _backlog/
-│   └── plans/
-│       ├── README.md         ← cross-cutting advisor plans
-│       └── <NNN>-<slug>.md
+├── README.md                 ← you are here (disposable index)
+├── _wayfinder/<effort>/      ← wayfinder maps + tickets (never committed)
 ├── _write-pr/                 ← PR description drafts (write-pr skill)
-├── _handoff/                  ← session handoff docs (handoff skill)
-├── _improve-architecture/      ← markdown architecture reviews
-├── _pr-review/                 ← PR review findings (review-pr skill)
-├── _roast/                     ← roast reports
-└── _duel/                      ← duel candidates + verdicts, one slug folder per duel
+└── _pr-review/                 ← PR review findings (review-pr skill)
 ```
 
-- **Spec** → `.scratch/<requirement-slug>/SPEC.md` (legacy: `PRD.md`)
-- **Tickets** → `.scratch/<requirement-slug>/tickets.md`
-- **Issue** → `.scratch/<requirement-slug>/issues/<NN>-<slug>.md`
-- **Requirement plan** → `.scratch/<requirement-slug>/plans/<NN>-<slug>.md`
-- **Backlog plan** → `.scratch/_backlog/plans/<NNN>-<slug>.md`
+- **Wayfinder** → `.scratch/_wayfinder/<effort-slug>/decision-map.md` + `tickets/`
 - **PR description** → `.scratch/_write-pr/<branch-slug>-PR.md`
-- **Handoff doc** → `.scratch/_handoff/<timestamp>-handoff.md`
-- **Architecture review** → `.scratch/_improve-architecture/architecture-review-<timestamp>.md`
 - **PR review findings** → `.scratch/_pr-review/<id>.md`
-- **Roast report** → `.scratch/_roast/ROAST.md`
-- **Duel** → `.scratch/_duel/<slug>/` (candidate-a, candidate-b, merged; user cleans up)
 
-## Requirements
-
-| Slug | Spec | Plans | Notes |
-|------|-----|-------|-------|
-| *(none yet)* | | | |
-
-Add a row when you create a requirement folder under `.scratch/<requirement-slug>/`.
-
-## Plan backlogs
-
-| Tree | Index |
-|------|-------|
-| Cross-cutting / audit-driven | [`.scratch/_backlog/plans/README.md`](_backlog/plans/README.md) |
-| Per-requirement | `.scratch/<requirement-slug>/plans/README.md` when that requirement exists |
-
-Do not duplicate full backlog tables here — each plans README owns execution order and status.
+Legacy `.scratch/_backlog/plans/` or requirement folders, if present, are stale — migrate to OpenSpec via `/plan` rather than extending them.

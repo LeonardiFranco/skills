@@ -1,14 +1,14 @@
 ---
 name: yagni
-description: Judge one proposal, design, or `.scratch` plan against YAGNI — classify every moving part as forced or speculative and return the simplest version the stated requirement allows. Use when asked to yagni or simplify a proposal, when a design smells over-engineered, or when another skill needs the lens. Judges proposals, not already-written code.
+description: Judge one proposal, design, or OpenSpec change against YAGNI — classify every moving part as forced or speculative and return the simplest version the stated requirement allows. Use when asked to yagni or simplify a proposal, when a design smells over-engineered, or when another skill needs the lens. Judges proposals, not already-written code.
 ---
 
 # YAGNI
 
-Take one proposal — a design, a `.scratch` plan, or a described approach — and
-return the simplest version that still satisfies the stated requirement.
-Read-only on source; the only file you may rewrite is a `.scratch` plan you were
-pointed at.
+Take one proposal — a design, an OpenSpec change under `openspec/changes/`, or a
+described approach — and return the simplest version that still satisfies the
+stated requirement. Read-only on source; the only files you may rewrite are
+artifacts in an OpenSpec change folder you were pointed at.
 
 **YAGNI** — *You Aren't Gonna Need It.* A capable model's first design trends
 elaborate — extra abstractions, dependencies, layers, config knobs — because

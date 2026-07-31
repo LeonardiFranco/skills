@@ -41,10 +41,10 @@ Read from steering (especially `AGENTS.md`):
 
 ## Plan integration (after execute)
 
-When a `.scratch/**/plans/*.md` plan drove the work:
+When an `openspec/changes/<slug>/` change drove the work:
 
-- Pull manual test plan and done criteria into the PR test section
-- Match plan **Risk** unless the diff proves otherwise
+- Pull manual verify / done criteria from `tasks.md` into the PR test section
+- Match proposal **Risk** unless the diff proves otherwise
 - Note withdrawn or deferred steps in Notes / Additional Context
 
 ## Optional steering convention (for repo maintainers)

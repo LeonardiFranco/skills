@@ -22,11 +22,11 @@ Read the work item and its child Tasks (work-item-lifecycle read op). Capture th
 
 **Completion criterion:** you hold the plan text, the child Task ids, and every attachment saved to disk (or confirmation there are none).
 
-### 2. Materialize into `.scratch/`
+### 2. Materialize into OpenSpec
 
-`/execute` reads a plan from a `.scratch/` plan tree, not from a work item. Write the description's plan to `.scratch/<story-slug>/plans/01-<slug>.md`, add a `Source:` line naming the story id, and create the tree's `README.md` with this plan's row. Save attachments in a sibling `assets/` folder.
+`/execute` reads an OpenSpec change folder, not a work item. Turn the description into `openspec/changes/<story-slug>/` (`proposal.md`, `design.md`, `tasks.md`, plus delta specs when behavior is involved) per the plan template. Set `Source:` to the story id. Add a row to `openspec/changes/README.md`. Save attachments under `openspec/changes/<story-slug>/assets/`.
 
-**Completion criterion:** a plan file and its tree `README.md` exist under `.scratch/`, with the story id in `Source:` and attachments in `assets/`.
+**Completion criterion:** the change folder and README row exist, with the story id in `Source:` and attachments in `assets/`.
 
 ### 3. Mark active
 
@@ -36,7 +36,7 @@ Set the story and each child Task to the **active** state (set-state op), then r
 
 ### 4. Execute
 
-Invoke `/execute` on the materialized plan as a **hot start** — you just wrote it. Inline any text attachments as advisor notes so they reach the executor's worktree, which cannot see `.scratch/`; list binary assets by path and flag that the executor can't open them. Do not reimplement any of `/execute` — carry its verdict forward.
+Invoke `/execute` on the materialized change as a **hot start** — you just wrote it. Inline any text attachments as advisor notes so they reach the executor; list binary assets by path and flag that the executor can't open them. Do not reimplement any of `/execute` — carry its verdict forward.
 
 **Completion criterion:** `/execute` returned a verdict (APPROVE / REVISE / BLOCK).
 
@@ -45,7 +45,7 @@ Invoke `/execute` on the materialized plan as a **hot start** — you just wrote
 Branch on the verdict:
 
 - **APPROVE** — set each child Task to **resolved**; set the story to **resolved** once all its Tasks are resolved. Then ensure the PR is linked to the story: if `/execute`'s report already published a draft PR (its own publish-on-approve tail fired), reuse that URL; otherwise run `publish-pr`. Link the PR to the story per the PR-host config — that link is this skill's job, not `publish-pr`'s. Report the resolved ids and the PR URL.
-- **REVISE / BLOCK** — the work isn't done: leave the story and Tasks **active**. Report `/execute`'s outcome and what's needed. On BLOCK the story stays active for a human to re-plan or hand back to `reconcile`.
+- **REVISE / BLOCK** — the work isn't done: leave the story and Tasks **active**. Report `/execute`'s outcome and what's needed. On BLOCK the story stays active for a human to re-plan via `/plan` or `/vet`.
 
 **Completion criterion:** on APPROVE, the story and its Tasks read back as resolved and the PR is linked; on REVISE/BLOCK, states are unchanged from active and the user has been told why.
 

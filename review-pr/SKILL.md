@@ -104,5 +104,5 @@ nothing was posted to the host.
 Findings file written; host comments posted **only if** the user named a non-empty publish set
 and those comments were posted (URLs reported when posted); worktree removed; and the user told
 the verdict plus what to do next (test and flip the draft, or send findings back through
-`/execute` REVISE / `reconcile`). No votes cast, no code edited, user's working tree untouched.
+`/execute` REVISE / `/plan` / `/vet`). No votes cast, no code edited, user's working tree untouched.
 No host comment command may run before Step 4 has an explicit publish selection.
